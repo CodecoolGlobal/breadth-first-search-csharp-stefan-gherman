@@ -44,8 +44,19 @@ namespace BFS_c_sharp
                 }
                 Console.WriteLine();
             }
-
-            Console.WriteLine("Done");
+            Console.WriteLine("-------------------------\n");
+            Console.WriteLine("Get Friends at a distance:");
+            foreach (var user in users)
+            {
+                var friendsAtADistance = BFS.BFS.FriendsOfFriendsAtDistance(users, user, 2);
+                Console.WriteLine($"Friends of {user} at distance {2} are:");
+                foreach(var friend in friendsAtADistance)
+                {
+                    Console.WriteLine(friend);
+                }
+                Console.WriteLine();
+            }
+                Console.WriteLine("Done");
             Console.ReadKey();
         }
     }

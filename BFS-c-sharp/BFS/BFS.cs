@@ -61,5 +61,46 @@ namespace BFS_c_sharp.BFS
 
             return -1;
         }
+        
+        public static HashSet<UserNode> FriendsOfFriendsAtDistance (List<UserNode> graph, UserNode target, int distance)
+        {
+            HashSet<UserNode> friendsOfFriends = new HashSet<UserNode>();
+            if (distance == 0)
+            {
+                friendsOfFriends.Add(target);
+                return friendsOfFriends;
+            }
+
+            InitializeVisited(graph);
+            
+
+            Queue<UserNode> searchQueue = new Queue<UserNode>();
+
+            searchQueue.Enqueue(target);
+            visitedNodes[target] = true;
+            Dictionary<UserNode, int> nodePerLevel = new Dictionary<UserNode, int>();
+            nodePerLevel.Add(target, 0);
+
+            while (searchQueue.Count != 0)
+            {
+                var currentFirst = searchQueue.Dequeue();
+                foreach (var friend in currentFirst.Friends)
+                {
+                    if (visitedNodes[friend] == false)
+                    {
+                        searchQueue.Enqueue(friend);
+                        visitedNodes[friend] = true;
+                        nodePerLevel.Add(friend, nodePerLevel[currentFirst] + 1);
+                    }
+
+                    if(nodePerLevel[friend] == distance)
+                    {
+                        friendsOfFriends.Add(friend);
+                    }
+                }
+            }
+
+                return friendsOfFriends;
+        }
     }
 }
